@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import FunctionalComponent from './components/FunctionalComponent';
 import './App.css';
+import MatchDashboardService from './service/MatchDashboardService';
+import MatchDashboard from './components/MatchDashboard';
+import PredictionNavbar from './components/navbar/PredictionNavbar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state={
+    subjects:[
+      {subjectName:'Maths'},
+      {subjectName:'Science'},
+      {subjectName:'Programming'}
+    ]
+  };
+
+  changesSubjectHandler=()=>{
+    this.setState({
+      subjects:[
+        {subjectName:'Statistics'},
+        {subjectName:'Science'},
+        {subjectName:'Programming'}
+      ]
+    })
+  }
+
+  render(){
+    return (
+      <div className="App">
+         <PredictionNavbar/>
+         <MatchDashboard/>
+        
+      </div>
+    );
+  }
 }
 
 export default App;
