@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
 const BasicComponents=()=>{
+    
     const[userSubject,setUserSubject]=useState({
         subjects:[
             {subjectName:'Maths',id:1,alias:'Calculus'},
@@ -15,31 +16,32 @@ const BasicComponents=()=>{
     })
 
     const changeUserState=(newSubject,id)=>{
-    //    var dynamicObje =userSubject.subjects.map((subject)=>{
-    //         if(subject.id==id){
-    //             subject.subjectName=newSubject;
-    //         }
-    //     });
-    //     console.log(dynamicObje);
-        console.log(userSubject);
+        const subjectIndex=this.state.subjects.findIndex((subject)=>{
+            return subject.id===id;
+        })
+
+        let modifiedObject={
+            ...
+            this.state.subjects.find((subject)=>subject.id===id)
+        }
+        modifiedObject.subjectName=newSubject;
+        let subjectsList=[...this.state.subjects];
+        subjectsList[subjectIndex]=modifiedObject;
+        console.log(newSubject);
         setUserSubject({
-            subjects:[
-                {subjectName:newSubject,id:1,alias:'Calculus'},
-                {subjectName:'Science',id:2,alias:'Gravitation'},
-                {subjectName:'Programming, Is the best',id:3,alias:'Java'}
-              ],
+            subjects:subjectsList,
             showSubjects:true 
         })
     }
     const renameSubjectjhandler=(event,id)=>{
         // Find Index
         const subjectIndex=userSubject.subjects.findIndex((subject)=>{
-            return subject.id==id;
+            return subject.id===id;
         })
 
         // Mutation
         let modifyObject={
-            ...userSubject.subjects.find((subject)=>subject.id==id)
+            ...userSubject.subjects.find((subject)=>subject.id===id)
         };
         //Modify Property
         modifyObject.subjectName=event.target.value;
@@ -60,7 +62,7 @@ const BasicComponents=()=>{
     }
     const deleteUserSubject=(id)=>{
         let  modifiedSubjects=[...userSubject.subjects];
-        modifiedSubjects= modifiedSubjects.filter((subject)=>subject.id !=id);
+        modifiedSubjects= modifiedSubjects.filter((subject)=>subject.id !==id);
         setUserSubject({
             subjects:modifiedSubjects,
             showSubjects:true 
