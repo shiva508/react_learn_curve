@@ -10,7 +10,7 @@ const PredictionNavbar=()=>{
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Shop</Nav.Link>
+            <Nav.Link href="#link">User List</Nav.Link>
             <NavDropdown title="Take A Tour" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">New to market</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Most Loved</NavDropdown.Item>

@@ -5,7 +5,10 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 const Routes=()=>{
 <Fragment>
-
+        <Route>
+            
+            
+        </Route>
     
 </Fragment>
 }
