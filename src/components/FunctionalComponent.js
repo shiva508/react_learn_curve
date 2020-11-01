@@ -2,6 +2,8 @@
 import React, { Fragment } from 'react';
 import '../Styles/FunctionalComponent.css';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 const  FunctionalComponent=(props)=>{
 return(
 <Fragment>
@@ -13,6 +15,7 @@ return(
       onChange={props.onChangeSubject}
       value={props.subject}/>
   </Form.Group>
+  <Button onClick={props.deleteSubjects} variant="warning">Delete</Button>{' '}
 </Fragment>
 );
 

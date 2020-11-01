@@ -15,28 +15,41 @@ const BasicComponents=()=>{
     })
 
     const changeUserState=(newSubject,id)=>{
-       var dynamicObje =userSubject.subjects.map((subject)=>{
-            if(subject.id==id){
-                subject.subjectName=newSubject;
-            }
-        });
-        console.log(dynamicObje);
+    //    var dynamicObje =userSubject.subjects.map((subject)=>{
+    //         if(subject.id==id){
+    //             subject.subjectName=newSubject;
+    //         }
+    //     });
+    //     console.log(dynamicObje);
         console.log(userSubject);
         setUserSubject({
             subjects:[
                 {subjectName:newSubject,id:1,alias:'Calculus'},
                 {subjectName:'Science',id:2,alias:'Gravitation'},
                 {subjectName:'Programming, Is the best',id:3,alias:'Java'}
-              ]
+              ],
+            showSubjects:true 
         })
     }
-    const renameSubjectjhandler=(event)=>{
+    const renameSubjectjhandler=(event,id)=>{
+        // Find Index
+        const subjectIndex=userSubject.subjects.findIndex((subject)=>{
+            return subject.id==id;
+        })
+
+        // Mutation
+        let modifyObject={
+            ...userSubject.subjects.find((subject)=>subject.id==id)
+        };
+        //Modify Property
+        modifyObject.subjectName=event.target.value;
+        // Mutation
+        let subjectsList=[...userSubject.subjects];
+        //Update object list on state
+        subjectsList[subjectIndex]=modifyObject;
         setUserSubject({
-            subjects:[
-                {subjectName:'Maths',id:1,alias:'Calculus'},
-                {subjectName:event.target.value,id:2,alias:'Gravitation'},
-                {subjectName:'Programming, Is the best',id:3,alias:'Java'}
-              ]  
+            subjects:subjectsList,
+            showSubjects:true 
         })
     }
     const showSubjects=()=>{
@@ -45,6 +58,15 @@ const BasicComponents=()=>{
             showSubjects:true
         })
     }
+    const deleteUserSubject=(id)=>{
+        let  modifiedSubjects=[...userSubject.subjects];
+        modifiedSubjects= modifiedSubjects.filter((subject)=>subject.id !=id);
+        setUserSubject({
+            subjects:modifiedSubjects,
+            showSubjects:true 
+        })
+    }
+
     return(
         <Fragment>
     { userSubject.showSubjects?
@@ -52,7 +74,13 @@ const BasicComponents=()=>{
         {
             userSubject.subjects.map((subject)=>{
                 return(
-                <FunctionalComponent onChangeSubject={renameSubjectjhandler} onClickChangeState={changeUserState.bind(this,subject.alias,subject.id)} key={subject.id} subject={subject.subjectName}></FunctionalComponent> 
+                <FunctionalComponent 
+                deleteSubjects={deleteUserSubject.bind(this,subject.id)}
+                onChangeSubject={(event)=>renameSubjectjhandler(event,subject.id)} 
+                onClickChangeState={changeUserState.bind(this,subject.alias,subject.id)} 
+                key={subject.id} 
+                subject={subject.subjectName}>  
+                </FunctionalComponent> 
                 )      
         }) 
         }

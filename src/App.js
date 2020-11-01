@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
          <PredictionNavbar/>
-         <BasicComponentsConditional/>
+         <BasicComponents/>
          <MatchDashboard/>
         
       </div>
