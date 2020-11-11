@@ -1,17 +1,31 @@
-import React,{Component, Fragment, useState} from 'react';
+
+import React,{Component, Fragment} from 'react';
 import FunctionalComponent from '../FunctionalComponent';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-class BasicComponentsStyles extends Component{
+import ClassComponent from '../ClassComponent';
 
-    state={
-        subjects:[
-            {subjectName:'Maths',id:1,alias:'Calculus'},
-            {subjectName:'Science',id:2,alias:'Gravitation'},
-            {subjectName:'Programming',id:3,alias:'Java'}
-          ],
-        showSubjects:false
+
+class LifeCycleMothodsComponent extends Component{
+    //1st one to ne called 
+    constructor(props){
+        super(props)
+        console.log('Constructor')
+        this.state={
+            subjects:[
+                {subjectName:'Maths',id:1,alias:'Calculus'},
+                {subjectName:'Science',id:2,alias:'Gravitation'},
+                {subjectName:'Programming',id:3,alias:'Java'}
+              ],
+            showSubjects:false
+        }
     }
+    
+    //On change state
+        static getDerivedStateFromProps(props,state){
+            console.log('LifeCycleMothodsComponent:getDerivedStateFromProps',props)
+            return state;
+        }
 
      changeUserState=(newSubject,id)=>{
         const subjectIndex=this.state.subjects.findIndex((subject)=>{
@@ -31,6 +45,7 @@ class BasicComponentsStyles extends Component{
             showSubjects:true 
         })
     }
+   
      renameSubjectjhandler=(event,id)=>{
         // Find Index
         const subjectIndex=this.state.subjects.findIndex((subject)=>{
@@ -66,8 +81,36 @@ class BasicComponentsStyles extends Component{
             showSubjects:true 
         })
     }
+    shouldComponentUpdate(nextProps,nextState){
+        console.log('LifeCycleMothodsComponent : shouldComponentUpdate');
+        return true;
+    }
+    getSnapshotBeforeUpdate(prevProps,prevState){
+        console.log('LifeCycleMothodsComponent : getSnapshotBeforeUpdate')
+        return {message:'Snapshot '};
+    }
+
+    componentDidUpdate(prevProps,prevState,snapshot){
+        console.log('LifeCycleMothodsComponent : componentDidUpdate') 
+        console.log(snapshot);
+    }
+
+    componentDidMount(){
+        console.log('LifeCycleMothodsComponent: componentDidMount')
+    }
+
+    // componentWillMount(){
+    //  console.log('componentDidMount')
+    //  }
+
+    //  getSnapshotBeforeUpdate(prevProps,prevState){
+    //  console.log('LifeCycleMothodsComponent:getSnapshotBeforeUpdate');
+    //   return true;
+    // }
     
+   
 render(){
+    console.log('LifeCycleMothodsComponent:Render:')
     let styleClasses=['red','bold'].join(' ');
     let buttonStyleClass=[];
 
@@ -94,13 +137,13 @@ render(){
         {
             this.state.subjects.map((subject)=>{
                 return(
-                <FunctionalComponent 
+                <ClassComponent 
                 deleteSubjects={this.deleteUserSubject.bind(this,subject.id)}
                 onChangeSubject={(event)=>this.renameSubjectjhandler(event,subject.id)} 
                 onClickChangeState={this.changeUserState.bind(this,subject.alias,subject.id)} 
                 key={subject.id} 
                 subject={subject.subjectName}>  
-                </FunctionalComponent> 
+                </ClassComponent> 
                 )      
         }) 
         }
@@ -129,4 +172,4 @@ render(){
        
     );
 }
-};export default BasicComponentsStyles;
+};export default LifeCycleMothodsComponent;

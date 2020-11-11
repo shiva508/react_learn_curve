@@ -3,6 +3,7 @@ import React,{Component, Fragment, useState} from 'react';
 import FunctionalComponent from '../FunctionalComponent';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import axios from 'axios';
 
 const BasicComponents=()=>{
     
@@ -15,17 +16,18 @@ const BasicComponents=()=>{
         showSubjects:false
     })
 
+    const[dynamicStyle,setDynamicStyle]=useState('');
     const changeUserState=(newSubject,id)=>{
-        const subjectIndex=this.state.subjects.findIndex((subject)=>{
+        const subjectIndex=userSubject.subjects.findIndex((subject)=>{
             return subject.id===id;
         })
 
         let modifiedObject={
             ...
-            this.state.subjects.find((subject)=>subject.id===id)
+            userSubject.subjects.find((subject)=>subject.id===id)
         }
         modifiedObject.subjectName=newSubject;
-        let subjectsList=[...this.state.subjects];
+        let subjectsList=[...userSubject.subjects];
         subjectsList[subjectIndex]=modifiedObject;
         console.log(newSubject);
         setUserSubject({
@@ -68,7 +70,19 @@ const BasicComponents=()=>{
             showSubjects:true 
         })
     }
-
+    function dynamicStylePicher(subjects){
+        let buttonStyleClass=[];
+        if(subjects.length==3){
+            buttonStyleClass.push('Nithya-Button')
+        }
+        if(subjects.length==2){
+            buttonStyleClass.push('red')
+        }  
+        if(subjects.length==1) {
+            buttonStyleClass.push('Nithya-Button-Danger')
+        }
+        return buttonStyleClass.join(' ');
+    }
     return(
         <Fragment>
     { userSubject.showSubjects?
@@ -87,7 +101,7 @@ const BasicComponents=()=>{
         }) 
         }
         {''}
-        <Button onClick={()=>changeUserState("OOPS",1)} variant="success">Change User State</Button>{' '}
+        <button onClick={()=>changeUserState("OOPS",1)} className={dynamicStylePicher(userSubject.subjects)} variant="success">Change User State</button>{' '}
 
         </Fragment>
         :

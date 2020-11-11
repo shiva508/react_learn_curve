@@ -27,7 +27,7 @@ return(
                         <td>{data.netRunRate}</td>
                         {data.matchDetails.map((matchDetail)=>{
                             return(
-                                <Fragment>
+                                <Fragment key={matchDetail.matchNumber}>
                                     {matchDetail.matchResult==='We won' ?<td>💚</td>:<td>❤️</td>}
                                 </Fragment>
                             
