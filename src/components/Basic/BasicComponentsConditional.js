@@ -17,7 +17,7 @@ class BasicComponentsConditional extends Component{
 
      changeUserState=(newSubject,id)=>{
        var dynamicObje =this.state.subjects.map((subject)=>{
-            if(subject.id==id){
+            if(subject.id===id){
                 subject.subjectName=newSubject;
             }
         });

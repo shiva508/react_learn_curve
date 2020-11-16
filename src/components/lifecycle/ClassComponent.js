@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import '../Styles/FunctionalComponent.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -21,9 +20,16 @@ class ClassComponent extends Component{
         return state;
     }
 
+    //Changing when some thing is changed,prevent un necessory rnndering
     shouldComponentUpdate(nextProps,nextState){
         console.log('ClassComponent: shouldComponentUpdate')
-        return true;
+        if(nextProps.subject !== this.props.subject                   || 
+        nextProps.onClickChangeState !==this.props.onClickChangeState ||
+        nextProps.onChangeSubject !==this.props.onChangeSubject){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     getSnapshotBeforeUpdate(precProps,prevState){
@@ -36,11 +42,14 @@ class ClassComponent extends Component{
 
 //    }
 
+    
+   
+    componentWillUnmount(){
+        console.log('ClassComponent:  componentWillUnmount---->CLEAN UP WORK')
+    }
     componentDidUpdate(){
         console.log('ClassComponent: componentDidUpdate')
     }
-   
-
     render(){
         console.log('ClassComponent:render');
         return(

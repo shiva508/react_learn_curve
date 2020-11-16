@@ -1,0 +1,29 @@
+.FunctionalComponent_Input{
+    width: 20% !important;
+    display: inline;
+}
+.Nithya{
+    width: 50%;
+    margin: 16px auto;
+    border: 1px solid #000000;
+    box-shadow: 0 2px 3px #000000;
+    padding: 10px;
+    text-align: center;
+}
+.Nithya-Button{
+    background-color:green;
+    color: white;
+    font: 1em sans-serif;
+    border: 1px solid #333333;
+    padding: 8px;
+    cursor: pointer;
+}
+.Nithya-Button-Danger{
+    background-color:red;
+    color: white;
+    font: 1em sans-serif;
+    border: 1px solid #333333;
+    padding: 8px;
+    cursor: pointer;
+}
+

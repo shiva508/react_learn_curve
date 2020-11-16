@@ -1,10 +1,12 @@
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../Styles/FunctionalComponent.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const  FunctionalComponent=(props)=>{
+
+  
 return(
 <div className='Nithya'>
     <h1 onClick={props.onClickChangeState}>This is {props.subject} ,Score is {Math.floor(Math.random()*408)}</h1>

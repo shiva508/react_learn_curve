@@ -71,13 +71,13 @@ render(){
     let styleClasses=['red','bold'].join(' ');
     let buttonStyleClass=[];
 
-    if(this.state.subjects.length==3){
+    if(this.state.subjects.length===3){
         buttonStyleClass.push('Nithya-Button');
     }
-    if(this.state.subjects.length==2){
+    if(this.state.subjects.length===2){
         buttonStyleClass.push('red');
     }  
-    if(this.state.subjects.length==1) {
+    if(this.state.subjects.length===1) {
         buttonStyleClass.push('Nithya-Button-Danger');
     }
     const styles={

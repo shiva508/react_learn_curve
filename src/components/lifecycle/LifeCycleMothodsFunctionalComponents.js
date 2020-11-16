@@ -1,22 +1,30 @@
-
-import React,{Component, Fragment, useState} from 'react';
+import React,{Fragment, useState,useEffect, useRef} from 'react';
 import FunctionalComponent from '../FunctionalComponent';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import axios from 'axios';
+import PureClassBasedComponent from './PureClassBasedComponent';
+import WrappingComponent from '../hoc/WrappingComponent';
+import OauthContext from '../context/OauthContext';
 
-const BasicComponents=()=>{
-    
+const LifeCycleMothodsFunctionalComponents=(props)=>{
+
+    const atomaticallyClickButtonref=useRef(null);
+
+    // atomaticallyClickButton.current.click();
+
     const[userSubject,setUserSubject]=useState({
         subjects:[
-            {subjectName:'Maths',id:1,alias:'Calculus'},
-            {subjectName:'Science',id:2,alias:'Gravitation'},
-            {subjectName:'Programming',id:3,alias:'Java'}
+            {subjectName:'Maths',id:1,alias:'Calculus',score:99},
+            {subjectName:'Science',id:2,alias:'Gravitation',score:99},
+            {subjectName:'Programming',id:3,alias:'Java',score:100}
           ],
-        showSubjects:false
+        showSubjects:false,
+        showSubjectsTest:true,
+        isAthenticated:false
     })
 
     const[dynamicStyle,setDynamicStyle]=useState('');
+    
     const changeUserState=(newSubject,id)=>{
         const subjectIndex=userSubject.subjects.findIndex((subject)=>{
             return subject.id===id;
@@ -29,7 +37,6 @@ const BasicComponents=()=>{
         modifiedObject.subjectName=newSubject;
         let subjectsList=[...userSubject.subjects];
         subjectsList[subjectIndex]=modifiedObject;
-        console.log(newSubject);
         setUserSubject({
             subjects:subjectsList,
             showSubjects:true 
@@ -83,27 +90,55 @@ const BasicComponents=()=>{
         }
         return buttonStyleClass.join(' ');
     }
+    useEffect(()=>{
+        console.log('LifeCycleMothodsFunctionalComponents:useEffect');
+    // const timer= setTimeout(()=>{
+    //         alert('Hi')
+    //     },1000);
+    // atomaticallyClickButtonref.current.click()
+        return()=>{
+            // clearTimeout(timer);
+            console.log('LifeCycleMothodsFunctionalComponents: Clean up work')
+        }
+    },[]);
+
+    //[]--->use empty array when you do not have any dependancy,and load only once
+    //[userSubject.subjects,userSubject.showSubjects]-->van pass as many dependencies as you want
+
+    useEffect(()=>{
+        console.log('LifeCycleMothodsFunctionalComponents:useEffect--->2');
+    });
+
+    const authenticate=()=>{
+        let outhentcateObj={...userSubject}
+        outhentcateObj.isAthenticated=true;
+        setUserSubject(outhentcateObj)
+    }
+
     return(
+        
         <Fragment>
     { userSubject.showSubjects?
-        <Fragment>
+        <WrappingComponent>
         {
             userSubject.subjects.map((subject)=>{
                 return(
-                <FunctionalComponent 
+                <PureClassBasedComponent 
                 deleteSubjects={deleteUserSubject.bind(this,subject.id)}
                 onChangeSubject={(event)=>renameSubjectjhandler(event,subject.id)} 
                 onClickChangeState={changeUserState.bind(this,subject.alias,subject.id)} 
                 key={subject.id} 
+                logIn={userSubject.isAthenticated}
                 subject={subject.subjectName}>  
-                </FunctionalComponent> 
+                </PureClassBasedComponent> 
                 )      
         }) 
         }
         {''}
-        <button onClick={()=>changeUserState("OOPS",1)} className={dynamicStylePicher(userSubject.subjects)} variant="success">Change User State</button>{' '}
-
-        </Fragment>
+        <button ref={atomaticallyClickButtonref} onClick={()=>changeUserState("OOPS",1)} className={dynamicStylePicher(userSubject.subjects)} variant="success">Change User State</button>{' '}
+        <WrappingComponent>
+            <button  onClick={()=>authenticate()} className={dynamicStylePicher(userSubject.subjects)} variant="success">Log In</button>{' '}</WrappingComponent>
+        </WrappingComponent>
         :
         <Alert  variant='info'>
             Please click here to see data
@@ -118,4 +153,5 @@ const BasicComponents=()=>{
        
     );
 
-};export default BasicComponents;
+};export default LifeCycleMothodsFunctionalComponents;
+// export default React.memo(LifeCycleMothodsFunctionalComponents)

@@ -3,7 +3,7 @@ import React,{Component, Fragment} from 'react';
 import FunctionalComponent from '../FunctionalComponent';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import ClassComponent from '../ClassComponent';
+import ClassComponent from './ClassComponent';
 
 
 class LifeCycleMothodsComponent extends Component{
@@ -17,7 +17,8 @@ class LifeCycleMothodsComponent extends Component{
                 {subjectName:'Science',id:2,alias:'Gravitation'},
                 {subjectName:'Programming',id:3,alias:'Java'}
               ],
-            showSubjects:false
+            showSubjects:false,
+            counter:0
         }
     }
     
@@ -42,7 +43,8 @@ class LifeCycleMothodsComponent extends Component{
         console.log(newSubject);
         this.setState({
             subjects:subjectsList,
-            showSubjects:true 
+            showSubjects:true ,
+            counter:0
         })
     }
    
@@ -62,9 +64,12 @@ class LifeCycleMothodsComponent extends Component{
         let subjectsList=[...this.state.subjects];
         //Update object list on state
         subjectsList[subjectIndex]=modifyObject;
-        this.setState({
+        this.setState((prevState,props)=>{
+          return{
             subjects:subjectsList,
-            showSubjects:true 
+            showSubjects:true ,
+            counter:prevState.counter+1
+          } 
         })
     }
     showSubjects=()=>{
@@ -114,13 +119,13 @@ render(){
     let styleClasses=['red','bold'].join(' ');
     let buttonStyleClass=[];
 
-    if(this.state.subjects.length==3){
+    if(this.state.subjects.length===3){
         buttonStyleClass.push('Nithya-Button');
     }
-    if(this.state.subjects.length==2){
+    if(this.state.subjects.length===2){
         buttonStyleClass.push('red');
     }  
-    if(this.state.subjects.length==1) {
+    if(this.state.subjects.length===1) {
         buttonStyleClass.push('Nithya-Button-Danger');
     }
     const styles={
